@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador de Veículo</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    #simulator {
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+
+<div id="simulator">
+    <h1>Simulador de Veículo</h1>
+    <label for="vehicleSelect">Escolha um veículo:</label>
+    <select id="vehicleSelect">
+        <option value="car">Carro</option>
+        <option value="bike">Bicicleta</option>
+        <option value="truck">Caminhão</option>
+    </select><br><br>
+
+    <label for="nameInput">Nome:</label>
+    <input type="text" id="nameInput"><br><br>
+
+    <label for="colorInput">Cor:</label>
+    <input type="text" id="colorInput" placeholder=""><br><br>
+
+    <label for="yearInput">Ano:</label>
+    <input type="number" id="yearInput" min="1900" max="2100" value=""><br><br>
+
+    <button onclick="simulator.updateVehicle()">Atualizar Veículo</button><br><br>
+
+    <div id="vehicleDisplay"></div>
+</div>
+
+<script>
+const simulator = {
+    selectedVehicle: 'car',
+    name: '',
+    color: '',
+    year: 2022,
+    constructor: function() {
+        this.selectedVehicle = 'car';
+        this.name = '';
+        this.color = '';
+        this.year = 2022;
+        this.updateVehicle();
+    },
+    updateVehicle: function() {
+        this.selectedVehicle = document.getElementById("vehicleSelect").value;
+        this.name = document.getElementById("nameInput").value;
+        this.color = document.getElementById("colorInput").value;
+        this.year = document.getElementById("yearInput").value;
+        this.renderVehicle();
+    },
+    renderVehicle: function() {
+        let vehicleImage;
+        switch(this.selectedVehicle) {
+            case "car":
+                vehicleImage = "🚗";
+                break;
+            case "bike":
+                vehicleImage = "🚲";
+                break;
+            case "truck":
+                vehicleImage = "🚚";
+                break;
+            default:
+                vehicleImage = "";
+        }
+
+        const vehicleDisplay = document.getElementById("vehicleDisplay");
+        vehicleDisplay.innerHTML = `<p>${vehicleImage}</p><p>Nome: ${this.name}</p><p>Cor: <span style="color:${this.color};">${this.color}</span></p><p>Ano: ${this.year}</p>`;
+    }
+};
+
+simulator.constructor();
+</script>
+
+</body>
+</html>
